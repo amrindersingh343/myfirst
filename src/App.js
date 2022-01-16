@@ -1,24 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import Clock from './clock';
+import Log from './login';
 
+import { useContext,useEffect, useState } from 'react';
+import AutoContext from './context';
+const dummy=[];
 function App() {
+  const [labelFlag,setLabelFlag]=useState(false);
+ 
+ const cnt=useContext(AutoContext)
+  console.log('app');
+  
+    
+  useEffect(()=>{
+    if(cnt.appFlag){
+
+        dummy.push({logintime:cnt.userinfo.logedtime,logouttime:cnt.userinfo.logedout})
+       console.log(dummy)
+       setLabelFlag(true);
+         
+       
+    }
+  },[cnt.appFlag])
+  
+               
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+<div className='st'>
+<Clock></Clock>
+{ labelFlag  && <ul>{dummy.map((value,ind,arr)=>{
+  return <li key={ind}>{arr[ind].logintime +""+arr[ind].logouttime }</li>
+})}</ul>}
+
+</div>
+    
+ 
   );
 }
 
